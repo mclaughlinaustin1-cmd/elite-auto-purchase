@@ -1,124 +1,133 @@
 import streamlit as st
+from datetime import datetime
 
 # 1. Page Configuration
 st.set_page_config(page_title="Elite Auto Purchase | Premium Concierge", page_icon="🏎️", layout="wide")
 
-# 2. Enhanced Professional Styling
+# 2. Advanced Professional Styling
 st.markdown("""
     <style>
-    /* Main background */
-    .stApp { background-color: #f8fafc; }
-    
-    /* Custom Header */
+    .stApp { background-color: #ffffff; }
     .main-header {
-        font-family: 'Inter', sans-serif;
         color: #1e3a8a;
-        font-size: 42px;
+        font-size: 48px;
         font-weight: 800;
         text-align: center;
+        letter-spacing: -1px;
         margin-bottom: 0px;
     }
-    
-    /* Value Box */
-    .elite-card {
-        background-color: #ffffff;
+    .hero-text {
+        text-align: center;
+        color: #64748b;
+        font-size: 20px;
+        margin-bottom: 30px;
+    }
+    .value-prop {
+        background-color: #f8fafc;
         padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        border-top: 5px solid #1e3a8a;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        text-align: center;
     }
-    
-    /* Buttons */
     .stButton>button {
-        background: linear-gradient(90deg, #1e3a8a 0%, #3b82f6 100%);
+        background: #1e3a8a;
         color: white;
-        border: none;
-        padding: 15px;
-        border-radius: 10px;
+        border-radius: 12px;
+        height: 3.5em;
         font-weight: bold;
-        transition: 0.3s;
+        border: none;
     }
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    .market-badge {
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+        display: inline-block;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Sidebar Process Info
+# 3. Sidebar: Trust Signals
 with st.sidebar:
-    st.markdown("### **THE ELITE PROCESS**")
-    st.markdown("""
-    1. **Consultation:** We define your exact specs.
-    2. **The Search:** We scour dealer inventories nationwide.
-    3. **Negotiation:** We grind the numbers so you don't have to.
-    4. **Finalization:** We review the 'We Owe' and contracts.
-    5. **Delivery:** You sign and drive.
-    """)
+    st.image("https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80&w=300", caption="Elite Headquarters")
+    st.markdown("### **Why Elite?**")
+    st.write("✅ **Expert Documentation:** We review every 'We Owe' and Sales Agreement.")
+    st.write("✅ **Market Intelligence:** We know the dealer holdbacks and true invoice costs.")
+    st.write("✅ **Time Recovery:** You spend 0 minutes at the dealership until it's time to sign.")
     st.divider()
-    st.info("💎 **Flat $500 Service Fee**\n\nNo hidden percentages. No dealer kickbacks. We work for *you*.")
+    st.markdown("### **Current Fee: $500**")
+    st.caption("Flat rate. No hidden commissions.")
 
-# 4. Hero Section
-st.markdown('<p class="main-header">ELITE AUTO PURCHASE</p>', unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #64748b; font-size: 18px;'>Professional Automotive Negotiation & Concierge</p>", unsafe_allow_html=True)
+# 4. Header & Live Market Status
+current_date = datetime.now().strftime("%B %d, %2026")
+st.markdown(f'<p class="main-header">ELITE AUTO PURCHASE</p>', unsafe_allow_html=True)
+st.markdown(f'<p class="hero-text">Your Private Liaison for Luxury & Performance Vehicles</p>', unsafe_allow_html=True)
+
+col_status1, col_status2, col_status3 = st.columns([1,2,1])
+with col_status2:
+    st.markdown(f'<div style="text-align:center;"><span class="market-badge">● LIVE MARKET UPDATED: {current_date}</span></div>', unsafe_allow_html=True)
 
 st.divider()
 
-# 5. Interactive Calculator (Outside the form for instant updates)
-st.markdown("### 📊 Live Deal Estimator")
-col_calc1, col_calc2 = st.columns([2, 1])
+# 5. The "Reward" Section (Psychological Hook)
+col_img, col_txt = st.columns([1.2, 1])
 
-with col_calc1:
-    c1, c2, c3, c4 = st.columns(4)
-    with c1: t_price = st.number_input("Target Price", value=45000, step=1000)
-    with c2: d_pay = st.number_input("Down Payment", value=5000, step=500)
-    with c3: i_rate = st.number_input("APR %", value=5.9, step=0.1)
-    with c4: t_months = st.selectbox("Term", [36, 48, 60, 72, 84], index=2)
+with col_img:
+    # This represents the moment of delivery
+    st.image("https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=800", 
+             caption="The Elite Handover: Fast, simple, and exactly what you asked for.")
 
-with col_calc2:
-    # Monthly Payment Logic
-    loan = t_price - d_pay
-    if loan > 0 and i_rate > 0:
-        m_rate = (i_rate / 100) / 12
-        pmt = loan * (m_rate * (1 + m_rate)**t_months) / ((1 + m_rate)**t_months - 1)
-    else:
-        pmt = loan / t_months if loan > 0 else 0
+with col_txt:
+    st.markdown("## **Skip the Grind.**")
+    st.markdown("""
+    Negotiating with dealerships is a full-time job. **Make it ours.** We handle the entire lifecycle of your purchase:
+    * **Spec Sourcing:** Finding the exact trim and color.
+    * **Price Grinding:** We fight for every dollar of the OTD price.
+    * **Contract Auditing:** Ensuring no hidden 'dealer adds' or fees.
     
-    st.metric("Estimated Monthly", f"${pmt:,.2f}", delta="Interest & Taxes extra")
+    **Your only job is to take the keys.**
+    """)
+    if st.button("GET STARTED NOW"):
+        st.markdown("---") # Visual jump to form
 
 st.divider()
 
-# 6. The Official Request Form
-st.markdown("### 📝 Secure Intake Form")
-with st.container():
-    with st.form("elite_intake", clear_on_submit=True):
-        f_col1, f_col2 = st.columns(2)
-        
-        with f_col1:
-            st.markdown("**Client Details**")
-            u_name = st.text_input("Full Name")
-            u_email = st.text_input("Email")
-            u_phone = st.text_input("Phone Number")
-            u_service = st.segmented_control("Service Requested", ["Full Negotiation", "10-min Strategy Call"])
+# 6. Interactive Calculator
+st.markdown("### 📊 Real-Time Payment Estimator")
+c_1, c_2, c_3, c_4 = st.columns(4)
+with c_1: t_price = st.number_input("Target Price", value=45000, step=1000)
+with c_2: d_pay = st.number_input("Down Payment", value=5000, step=500)
+with c_3: i_rate = st.number_input("Est. APR %", value=5.9, step=0.1)
+with c_4: t_months = st.selectbox("Term", [36, 48, 60, 72, 84], index=2)
 
-        with f_col2:
-            st.markdown("**Vehicle Details**")
-            u_make = st.text_input("Year, Make, Model")
-            u_warranty = st.multiselect("Protection Interest", ["Powertrain", "Full Wrap", "GAP", "None"])
-            st.write("Delivery Preference:")
-            d1, d2 = st.columns(2)
-            with d1: h_del = st.checkbox("Home Delivery")
-            with d2: d_sig = st.checkbox("In-Dealer Signing")
-            
-        u_notes = st.text_area("Specific Requirements (Trim, Color, etc.)")
-        
-        submit_btn = st.form_submit_button("LOCK IN MY ELITE SERVICE")
-        
-        if submit_btn:
-            if u_name and u_phone:
-                st.balloons()
-                st.success(f"Form Securely Submitted. Welcome to the Elite family, {u_name}.")
-            else:
-                st.error("Please provide at least a name and phone number.")
+loan = t_price - d_pay
+if loan > 0:
+    m_rate = (i_rate / 100) / 12
+    pmt = loan * (m_rate * (1 + m_rate)**t_months) / ((1 + m_rate)**t_months - 1) if i_rate > 0 else loan/t_months
+    st.metric("Estimated Monthly Commitment", f"${pmt:,.2f}")
 
-st.markdown("<p style='text-align: center; color: #94a3b8; margin-top: 50px;'>Elite Auto Purchase is a private concierge service. We are not a dealership.</p>", unsafe_allow_html=True)
+st.divider()
+
+# 7. Secure Intake Form
+st.markdown("### 📝 Secure Intake & Consultation Request")
+with st.form("elite_final_form"):
+    col_f1, col_f2 = st.columns(2)
+    with col_f1:
+        name = st.text_input("Full Name")
+        phone = st.text_input("Phone Number")
+        service = st.radio("Request Type", ["Full Negotiation ($500 Fee)", "10-Min Strategy Call (Free)"])
+    with col_f2:
+        vehicle = st.text_input("Desired Vehicle (Year/Make/Model)")
+        delivery = st.multiselect("Preferences", ["Home Delivery", "Dealership Pickup", "Trade-In Appraisal Needed"])
+        notes = st.text_area("Tell us about your specific goals")
+
+    if st.form_submit_button("SUBMIT TO CONCIERGE"):
+        if name and phone:
+            st.balloons()
+            st.success("Your request has been prioritized. An Elite agent will contact you shortly.")
+        else:
+            st.error("Please provide a name and phone number to continue.")
+
+st.markdown("<p style='text-align: center; color: #94a3b8; margin-top: 50px;'>Elite Auto Purchase | Sarasota, FL & Nationwide Delivery</p>", unsafe_allow_html=True)
